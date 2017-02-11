@@ -1,0 +1,46 @@
+{
+    "author": "Robert Durst",
+    "dependencies": {},
+    "keywords": [],
+    "name": "bitsee",
+    "pebble": {
+        "displayName": "BitSee",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "BTC",
+            "ETH"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "fonts/BebasNeue2.otf",
+                    "name": "NUEUE_20",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "images/imageedit_2_7619706079.png",
+                    "name": "IMAGE_BITCOIN",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "fonts/BebasNeue.otf",
+                    "name": "Nueue_48",
+                    "targetPlatforms": null,
+                    "type": "font"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite"
+        ],
+        "uuid": "1ef9c3ac-c65c-4862-9644-7313c0091748",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
