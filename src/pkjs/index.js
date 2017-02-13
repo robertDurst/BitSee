@@ -10,7 +10,7 @@ var xhrRequest = function (url, type, callback) {
 
 function getCrypto() {
   // Construct URL
-  var url = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,ETH,BTC';
+  var url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=USD,ETH,BTC,XMR';
 
   // Send request to CryptoCompare
   xhrRequest(url, 'GET', 
@@ -19,13 +19,15 @@ function getCrypto() {
       var json = JSON.parse(responseText);
       
       // set the variables from the data received
-      var ETH = json.USD;
+      var ETH = json.USD / json.ETH;
       var BTC = json.USD / json.BTC;
+      var XMR = json.USD / json.XMR;
       
       // Assemble dictionary using our keys
       var dictionary = {
       'BTC': BTC,
-      'ETH': ETH
+      'ETH': ETH,
+      'XMR': XMR
       };
 
       // Send to Pebble

@@ -8,7 +8,8 @@
         "enableMultiJS": false,
         "messageKeys": [
             "BTC",
-            "ETH"
+            "ETH",
+            "XMR"
         ],
         "projectType": "native",
         "resources": {
