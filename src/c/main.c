@@ -2,18 +2,18 @@
 
 // Creating the elements of the app
 static Window *s_main_window;
+
 static TextLayer *s_time_layer;
 static GFont s_time_font;
-static BitmapLayer *s_background_layer;
-static GBitmap *s_background_bitmap;
-static TextLayer *s_weather_layer;
-static GFont s_weather_font;
+
+static TextLayer *s_crypto_layer;
+static GFont s_crypto_font;
 
 static void main_window_load(Window *window) {
-  // Get information about the Window
+    // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
-  
+
   // Create the TextLayer with specific bounds
   s_time_layer = text_layer_create(
       GRect(0, PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 50));
@@ -33,37 +33,22 @@ static void main_window_load(Window *window) {
   // Apply to TextLayer
   text_layer_set_font(s_time_layer, s_time_font);
   
-  // Create GBitmap
-  s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BITCOIN);
-
-  // Create BitmapLayer to display the GBitmap
-  s_background_layer = bitmap_layer_create(bounds);
-
-  // Set the bitmap onto the layer and add to the window
-  bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
-  layer_add_child(window_layer, bitmap_layer_get_layer(s_background_layer));
-  
-  // Create temperature Layer
-  s_weather_layer = text_layer_create( GRect(0, PBL_IF_ROUND_ELSE(125, 120), bounds.size.w, 25));
+  // Create crypto Layer
+  s_crypto_layer = text_layer_create( GRect(0, PBL_IF_ROUND_ELSE(125, 120), bounds.size.w, 25));
 
   // Style the text
-  text_layer_set_background_color(s_weather_layer, GColorClear);
-  text_layer_set_text_color(s_weather_layer, GColorWhite);
-  text_layer_set_text_alignment(s_weather_layer, GTextAlignmentCenter);
-  text_layer_set_text(s_weather_layer, "Loading...");
+  text_layer_set_background_color(s_crypto_layer, GColorClear);
+  text_layer_set_text_color(s_crypto_layer, GColorWhite);
+  text_layer_set_text_alignment(s_crypto_layer, GTextAlignmentCenter);
+  text_layer_set_text(s_crypto_layer, "Loading...");
   
   // Create second custom font, apply it and add to Window
-  s_weather_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NUEUE_20));
-  text_layer_set_font(s_weather_layer, s_weather_font);
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_weather_layer));
+  s_crypto_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NUEUE_20));
+  text_layer_set_font(s_crypto_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_crypto_layer));
 }
 
 static void main_window_unload(Window *window) {
-  // Destroy GBitmap
-  gbitmap_destroy(s_background_bitmap);
-
-  // Destroy BitmapLayer
-  bitmap_layer_destroy(s_background_layer);
   
   // Destroy TextLayer
   text_layer_destroy(s_time_layer);
@@ -72,8 +57,8 @@ static void main_window_unload(Window *window) {
   fonts_unload_custom_font(s_time_font);
   
   // Destroy weather elements
-  text_layer_destroy(s_weather_layer);
-  fonts_unload_custom_font(s_weather_font);
+  text_layer_destroy(s_crypto_layer);
+  fonts_unload_custom_font(s_crypto_font);
 }
 
 static void update_time() {
@@ -109,9 +94,9 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
   // Store incoming information
-  static char temperature_buffer[32];
-  static char conditions_buffer[32];
-  static char weather_layer_buffer[32];
+  static char BTC_buffer[32];
+  static char ETH_buffer[32];
+  static char crypto_layer_buffer[32];
   
   // Read tuples for data
   Tuple *temp_tuple = dict_find(iterator, MESSAGE_KEY_BTC);
@@ -119,12 +104,12 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   
   // If all data is available, use it
   if(temp_tuple && conditions_tuple) {
-     snprintf(temperature_buffer, sizeof(temperature_buffer), "BTC: $%d", (int)temp_tuple->value->uint16);
-     snprintf(conditions_buffer, sizeof(conditions_buffer), "ETH: $%d", (int)conditions_tuple->value->uint16);
+     snprintf(BTC_buffer, sizeof(BTC_buffer), "BTC: $%d", (int)temp_tuple->value->uint16);
+     snprintf(ETH_buffer, sizeof(ETH_buffer), "ETH: $%d", (int)conditions_tuple->value->uint16);
   }
   // Assemble full string and display
-    snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s %s", temperature_buffer, conditions_buffer);
-    text_layer_set_text(s_weather_layer, weather_layer_buffer);
+    snprintf(crypto_layer_buffer, sizeof(crypto_layer_buffer), "%s %s", BTC_buffer, ETH_buffer);
+    text_layer_set_text(s_crypto_layer, crypto_layer_buffer);
 }
   
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {
@@ -144,6 +129,9 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 static void init() {
   // Create main Window element and assign to pointer
   s_main_window = window_create();
+  
+   // Set background
+  window_set_background_color(s_main_window, GColorBlack);
 
   // Set handlers to manage the elements inside the Window
   window_set_window_handlers(s_main_window, (WindowHandlers) {
@@ -169,9 +157,6 @@ static void init() {
   app_message_register_inbox_dropped(inbox_dropped_callback);
   app_message_register_outbox_failed(outbox_failed_callback);
   app_message_register_outbox_sent(outbox_sent_callback);
-  
-  // Set background
-  window_set_background_color(s_main_window, GColorBlack);
 }
 
 // Reallocating memory and deinitialization

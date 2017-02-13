@@ -5,7 +5,7 @@
     "name": "bitsee",
     "pebble": {
         "displayName": "BitSee",
-        "enableMultiJS": true,
+        "enableMultiJS": false,
         "messageKeys": [
             "BTC",
             "ETH"
@@ -14,16 +14,18 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/bitcoin.png",
+                    "name": "IMAGE_MONEY",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
                     "file": "fonts/BebasNeue2.otf",
                     "name": "NUEUE_20",
                     "targetPlatforms": null,
                     "type": "font"
-                },
-                {
-                    "file": "images/imageedit_2_7619706079.png",
-                    "name": "IMAGE_BITCOIN",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
                 },
                 {
                     "file": "fonts/BebasNeue.otf",
