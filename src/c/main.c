@@ -9,6 +9,9 @@ static GFont s_title_font;
 static TextLayer *s_BTC_layer;
 static TextLayer *s_ETH_layer;
 static TextLayer *s_XMR_layer;
+static TextLayer *s_STEEM_layer;
+static TextLayer *s_DASH_layer;
+
 static GFont s_crypto_font;
 
 static void main_window_load(Window *window) {
@@ -31,32 +34,45 @@ static void main_window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(s_title_layer));
   
   // Create GFont
-  s_title_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_Nueue_48));
+  s_title_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_Nueue_40));
 
   // Apply to TextLayer
   text_layer_set_font(s_title_layer, s_title_font);
   
   // Create BTC Layer
-  s_BTC_layer = text_layer_create( GRect(0, 60, bounds.size.w, 25));
+  s_BTC_layer = text_layer_create( GRect(5, 50, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_BTC_layer, GColorClear);
   text_layer_set_text_color(s_BTC_layer, GColorWhite);
-  text_layer_set_text_alignment(s_BTC_layer, GTextAlignmentCenter);
+  text_layer_set_text_alignment(s_BTC_layer, GTextAlignmentLeft);
   text_layer_set_text(s_BTC_layer, "Loading...");
   
   // Create second custom font, apply it and add to Window
-  s_crypto_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NUEUE_20));
+  s_crypto_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NUEUE_18));
   text_layer_set_font(s_BTC_layer, s_crypto_font);
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_BTC_layer));
     
+  // Create DASH Layer
+  s_DASH_layer = text_layer_create( GRect(5, 70, bounds.size.w, 25));
+
+  // Style the text
+  text_layer_set_background_color(s_DASH_layer, GColorClear);
+  text_layer_set_text_color(s_DASH_layer, GColorWhite);
+  text_layer_set_text_alignment(s_DASH_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_DASH_layer, "Loading...");
+  
+  // Apply font and add to Window
+  text_layer_set_font(s_DASH_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_DASH_layer));
+  
   // Create XMR Layer
-  s_XMR_layer = text_layer_create( GRect(0, 85, bounds.size.w, 25));
+  s_XMR_layer = text_layer_create( GRect(5, 90, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_XMR_layer, GColorClear);
   text_layer_set_text_color(s_XMR_layer, GColorWhite);
-  text_layer_set_text_alignment(s_XMR_layer, GTextAlignmentCenter);
+  text_layer_set_text_alignment(s_XMR_layer, GTextAlignmentLeft);
   text_layer_set_text(s_XMR_layer, "Loading...");
   
   // Apply font and add to Window
@@ -64,17 +80,30 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_XMR_layer));
   
   // Create ETH Layer
-  s_ETH_layer = text_layer_create( GRect(0, 110, bounds.size.w, 25));
+  s_ETH_layer = text_layer_create( GRect(5, 110, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_ETH_layer, GColorClear);
   text_layer_set_text_color(s_ETH_layer, GColorWhite);
-  text_layer_set_text_alignment(s_ETH_layer, GTextAlignmentCenter);
+  text_layer_set_text_alignment(s_ETH_layer, GTextAlignmentLeft);
   text_layer_set_text(s_ETH_layer, "Loading...");
   
   // Apply font and add to Window
   text_layer_set_font(s_ETH_layer, s_crypto_font);
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_ETH_layer));
+  
+  // Create STEEM Layer
+  s_STEEM_layer = text_layer_create( GRect(5, 130, bounds.size.w, 25));
+
+  // Style the text
+  text_layer_set_background_color(s_STEEM_layer, GColorClear);
+  text_layer_set_text_color(s_STEEM_layer, GColorWhite);
+  text_layer_set_text_alignment(s_STEEM_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_STEEM_layer, "Loading...");
+  
+  // Apply font and add to Window
+  text_layer_set_font(s_STEEM_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_STEEM_layer));
 
 }
 
@@ -90,6 +119,8 @@ static void main_window_unload(Window *window) {
   text_layer_destroy(s_BTC_layer);
   text_layer_destroy(s_ETH_layer);
   text_layer_destroy(s_XMR_layer);
+  text_layer_destroy(s_DASH_layer);
+  text_layer_destroy(s_STEEM_layer);
   fonts_unload_custom_font(s_crypto_font);
 }
 
@@ -115,20 +146,28 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   static char BTC_buffer[32];
   static char ETH_buffer[32];
   static char XMR_buffer[32];
+  static char DASH_buffer[32];
+  static char STEEM_buffer[32];
   static char BTC_layer_buffer[32];
   static char ETH_layer_buffer[32];
   static char XMR_layer_buffer[32];
+  static char DASH_layer_buffer[32];
+  static char STEEM_layer_buffer[32];
   
   // Read tuples for data
   Tuple *BTC_tuple = dict_find(iterator, MESSAGE_KEY_BTC);
   Tuple *ETH_tuple = dict_find(iterator, MESSAGE_KEY_ETH);
   Tuple *XMR_tuple = dict_find(iterator, MESSAGE_KEY_XMR);
+  Tuple *DASH_tuple = dict_find(iterator, MESSAGE_KEY_DASH);
+  Tuple *STEEM_tuple = dict_find(iterator, MESSAGE_KEY_STEEM);
   
   // If all data is available, use it
   if(BTC_tuple && ETH_tuple && XMR_tuple) {
-     snprintf(BTC_buffer, sizeof(BTC_buffer), "BTC: $%d", (int)BTC_tuple->value->uint16);
-     snprintf(ETH_buffer, sizeof(ETH_buffer), "ETH: $%d", (int)ETH_tuple->value->uint16);
-     snprintf(XMR_buffer, sizeof(XMR_buffer), "XMR: $%d", (int)XMR_tuple->value->uint16);
+     snprintf(BTC_buffer, sizeof(BTC_buffer), "Bitcoin (BTC): $%d", (int)BTC_tuple->value->uint16);
+     snprintf(ETH_buffer, sizeof(ETH_buffer), "Ethereum (ETH): $%d", (int)ETH_tuple->value->uint16);
+     snprintf(XMR_buffer, sizeof(XMR_buffer), "Monero (XMR): $%d", (int)XMR_tuple->value->uint16);
+     snprintf(DASH_buffer, sizeof(DASH_buffer), "Dash (DASH): $%d", (int)DASH_tuple->value->uint16);
+     snprintf(STEEM_buffer, sizeof(STEEM_buffer), "Steem (STEEM): $%d", (int)STEEM_tuple->value->uint16);
   }
   // Assemble full string and display
     snprintf(BTC_layer_buffer, sizeof(BTC_layer_buffer), "%s", BTC_buffer);
@@ -137,6 +176,10 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     text_layer_set_text(s_ETH_layer, ETH_layer_buffer);
     snprintf(XMR_layer_buffer, sizeof(XMR_layer_buffer), "%s", XMR_buffer);
     text_layer_set_text(s_XMR_layer, XMR_layer_buffer);
+    snprintf(DASH_layer_buffer, sizeof(DASH_layer_buffer), "%s", DASH_buffer);
+    text_layer_set_text(s_DASH_layer, DASH_layer_buffer);
+    snprintf(STEEM_layer_buffer, sizeof(STEEM_layer_buffer), "%s", STEEM_buffer);
+    text_layer_set_text(s_STEEM_layer, STEEM_layer_buffer);
 }
   
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {

@@ -9,7 +9,9 @@
         "messageKeys": [
             "BTC",
             "ETH",
-            "XMR"
+            "XMR",
+            "DASH",
+            "STEEM"
         ],
         "projectType": "native",
         "resources": {
@@ -24,13 +26,13 @@
                 },
                 {
                     "file": "fonts/BebasNeue2.otf",
-                    "name": "NUEUE_20",
+                    "name": "NUEUE_18",
                     "targetPlatforms": null,
                     "type": "font"
                 },
                 {
                     "file": "fonts/BebasNeue.otf",
-                    "name": "Nueue_48",
+                    "name": "Nueue_40",
                     "targetPlatforms": null,
                     "type": "font"
                 }
