@@ -6,11 +6,11 @@ static Window *s_main_window;
 static TextLayer *s_title_layer;
 static GFont s_title_font;
 
-static TextLayer *s_BTC_layer;
-static TextLayer *s_ETH_layer;
-static TextLayer *s_XMR_layer;
-static TextLayer *s_STEEM_layer;
-static TextLayer *s_DASH_layer;
+static TextLayer *s_Coin1_layer;
+static TextLayer *s_Coin2_layer;
+static TextLayer *s_Coin3_layer;
+static TextLayer *s_Coin4_layer;
+static TextLayer *s_Coin5_layer;
 
 static GFont s_crypto_font;
 
@@ -39,71 +39,72 @@ static void main_window_load(Window *window) {
   // Apply to TextLayer
   text_layer_set_font(s_title_layer, s_title_font);
   
-  // Create BTC Layer
-  s_BTC_layer = text_layer_create( GRect(5, 50, bounds.size.w, 25));
+  // Create Coin 1 Layer
+  s_Coin1_layer = text_layer_create( GRect(5, 50, bounds.size.w, 25));
 
   // Style the text
-  text_layer_set_background_color(s_BTC_layer, GColorClear);
-  text_layer_set_text_color(s_BTC_layer, GColorWhite);
-  text_layer_set_text_alignment(s_BTC_layer, GTextAlignmentLeft);
-  text_layer_set_text(s_BTC_layer, "Loading...");
+  text_layer_set_background_color(s_Coin1_layer, GColorClear);
+  text_layer_set_text_color(s_Coin1_layer, GColorWhite);
+  text_layer_set_text_alignment(s_Coin1_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_Coin1_layer, "Loading...");
   
   // Create second custom font, apply it and add to Window
-  s_crypto_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NUEUE_18));
-  text_layer_set_font(s_BTC_layer, s_crypto_font);
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_BTC_layer));
-    
-  // Create DASH Layer
-  s_DASH_layer = text_layer_create( GRect(5, 70, bounds.size.w, 25));
+  s_crypto_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NUEUE_20));
+  text_layer_set_font(s_Coin1_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin1_layer));
+  
+   // Create Coin 2 Layer
+  s_Coin2_layer = text_layer_create( GRect(5, 70, bounds.size.w, 25));
 
   // Style the text
-  text_layer_set_background_color(s_DASH_layer, GColorClear);
-  text_layer_set_text_color(s_DASH_layer, GColorWhite);
-  text_layer_set_text_alignment(s_DASH_layer, GTextAlignmentLeft);
-  text_layer_set_text(s_DASH_layer, "Loading...");
+  text_layer_set_background_color(s_Coin2_layer, GColorClear);
+  text_layer_set_text_color(s_Coin2_layer, GColorWhite);
+  text_layer_set_text_alignment(s_Coin2_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_Coin2_layer, "Loading...");
   
   // Apply font and add to Window
-  text_layer_set_font(s_DASH_layer, s_crypto_font);
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_DASH_layer));
+  text_layer_set_font(s_Coin2_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin2_layer));
   
-  // Create XMR Layer
-  s_XMR_layer = text_layer_create( GRect(5, 90, bounds.size.w, 25));
+  // Create Coin 3 Layer
+  s_Coin3_layer = text_layer_create( GRect(5, 90, bounds.size.w, 25));
 
   // Style the text
-  text_layer_set_background_color(s_XMR_layer, GColorClear);
-  text_layer_set_text_color(s_XMR_layer, GColorWhite);
-  text_layer_set_text_alignment(s_XMR_layer, GTextAlignmentLeft);
-  text_layer_set_text(s_XMR_layer, "Loading...");
+  text_layer_set_background_color(s_Coin3_layer, GColorClear);
+  text_layer_set_text_color(s_Coin3_layer, GColorWhite);
+  text_layer_set_text_alignment(s_Coin3_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_Coin3_layer, "Loading...");
   
   // Apply font and add to Window
-  text_layer_set_font(s_XMR_layer, s_crypto_font);
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_XMR_layer));
+  text_layer_set_font(s_Coin3_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin3_layer));
   
-  // Create ETH Layer
-  s_ETH_layer = text_layer_create( GRect(5, 110, bounds.size.w, 25));
+  
+  // Create Coin 4 Layer
+  s_Coin4_layer = text_layer_create( GRect(5, 110, bounds.size.w, 25));
 
   // Style the text
-  text_layer_set_background_color(s_ETH_layer, GColorClear);
-  text_layer_set_text_color(s_ETH_layer, GColorWhite);
-  text_layer_set_text_alignment(s_ETH_layer, GTextAlignmentLeft);
-  text_layer_set_text(s_ETH_layer, "Loading...");
+  text_layer_set_background_color(s_Coin4_layer, GColorClear);
+  text_layer_set_text_color(s_Coin4_layer, GColorWhite);
+  text_layer_set_text_alignment(s_Coin4_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_Coin4_layer, "Loading...");
   
   // Apply font and add to Window
-  text_layer_set_font(s_ETH_layer, s_crypto_font);
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_ETH_layer));
+  text_layer_set_font(s_Coin4_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin4_layer));
   
-  // Create STEEM Layer
-  s_STEEM_layer = text_layer_create( GRect(5, 130, bounds.size.w, 25));
+   // Create Coin 5 Layer
+  s_Coin5_layer = text_layer_create( GRect(5, 130, bounds.size.w, 25));
 
   // Style the text
-  text_layer_set_background_color(s_STEEM_layer, GColorClear);
-  text_layer_set_text_color(s_STEEM_layer, GColorWhite);
-  text_layer_set_text_alignment(s_STEEM_layer, GTextAlignmentLeft);
-  text_layer_set_text(s_STEEM_layer, "Loading...");
+  text_layer_set_background_color(s_Coin5_layer, GColorClear);
+  text_layer_set_text_color(s_Coin5_layer, GColorWhite);
+  text_layer_set_text_alignment(s_Coin5_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_Coin5_layer, "Loading...");
   
   // Apply font and add to Window
-  text_layer_set_font(s_STEEM_layer, s_crypto_font);
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_STEEM_layer));
+  text_layer_set_font(s_Coin5_layer, s_crypto_font);
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin5_layer));
 
 }
 
@@ -116,11 +117,11 @@ static void main_window_unload(Window *window) {
   fonts_unload_custom_font(s_title_font);
   
   // Destroy crypto elements
-  text_layer_destroy(s_BTC_layer);
-  text_layer_destroy(s_ETH_layer);
-  text_layer_destroy(s_XMR_layer);
-  text_layer_destroy(s_DASH_layer);
-  text_layer_destroy(s_STEEM_layer);
+  text_layer_destroy(s_Coin1_layer);
+  text_layer_destroy(s_Coin2_layer);
+  text_layer_destroy(s_Coin3_layer);
+  text_layer_destroy(s_Coin4_layer);
+  text_layer_destroy(s_Coin5_layer);
   fonts_unload_custom_font(s_crypto_font);
 }
 
@@ -143,43 +144,61 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
   // Store incoming information
-  static char BTC_buffer[32];
-  static char ETH_buffer[32];
-  static char XMR_buffer[32];
-  static char DASH_buffer[32];
-  static char STEEM_buffer[32];
-  static char BTC_layer_buffer[32];
-  static char ETH_layer_buffer[32];
-  static char XMR_layer_buffer[32];
-  static char DASH_layer_buffer[32];
-  static char STEEM_layer_buffer[32];
+  static char Coin1_Price_buffer[32];
+  static char Coin2_Price_buffer[32];
+  static char Coin3_Price_buffer[32];
+  static char Coin4_Price_buffer[32];
+  static char Coin5_Price_buffer[32];
+  
+  static char Coin1_Label_buffer[32];
+  static char Coin2_Label_buffer[32];
+  static char Coin3_Label_buffer[32];
+  static char Coin4_Label_buffer[32];
+  static char Coin5_Label_buffer[32];
+  
+  static char Coin1_layer_buffer[32];
+  static char Coin2_layer_buffer[32];
+  static char Coin3_layer_buffer[32];
+  static char Coin4_layer_buffer[32];
+  static char Coin5_layer_buffer[32];
   
   // Read tuples for data
-  Tuple *BTC_tuple = dict_find(iterator, MESSAGE_KEY_BTC);
-  Tuple *ETH_tuple = dict_find(iterator, MESSAGE_KEY_ETH);
-  Tuple *XMR_tuple = dict_find(iterator, MESSAGE_KEY_XMR);
-  Tuple *DASH_tuple = dict_find(iterator, MESSAGE_KEY_DASH);
-  Tuple *STEEM_tuple = dict_find(iterator, MESSAGE_KEY_STEEM);
+  Tuple *Coin1_Price_tuple = dict_find(iterator, MESSAGE_KEY_Coin1_Price);
+  Tuple *Coin2_Price_tuple = dict_find(iterator, MESSAGE_KEY_Coin2_Price);
+  Tuple *Coin3_Price_tuple = dict_find(iterator, MESSAGE_KEY_Coin3_Price);
+  Tuple *Coin4_Price_tuple = dict_find(iterator, MESSAGE_KEY_Coin4_Price);
+  Tuple *Coin5_Price_tuple = dict_find(iterator, MESSAGE_KEY_Coin5_Price);
+  
+  Tuple *Coin1_Label_tuple = dict_find(iterator, MESSAGE_KEY_Coin1_Label);
+  Tuple *Coin2_Label_tuple = dict_find(iterator, MESSAGE_KEY_Coin2_Label);
+  Tuple *Coin3_Label_tuple = dict_find(iterator, MESSAGE_KEY_Coin3_Label);
+  Tuple *Coin4_Label_tuple = dict_find(iterator, MESSAGE_KEY_Coin4_Label);
+  Tuple *Coin5_Label_tuple = dict_find(iterator, MESSAGE_KEY_Coin5_Label);
   
   // If all data is available, use it
-  if(BTC_tuple && ETH_tuple && XMR_tuple) {
-     snprintf(BTC_buffer, sizeof(BTC_buffer), "Bitcoin (BTC): $%d", (int)BTC_tuple->value->uint16);
-     snprintf(ETH_buffer, sizeof(ETH_buffer), "Ethereum (ETH): $%d", (int)ETH_tuple->value->uint16);
-     snprintf(XMR_buffer, sizeof(XMR_buffer), "Monero (XMR): $%d", (int)XMR_tuple->value->uint16);
-     snprintf(DASH_buffer, sizeof(DASH_buffer), "Dash (DASH): $%d", (int)DASH_tuple->value->uint16);
-     snprintf(STEEM_buffer, sizeof(STEEM_buffer), "Steem (STEEM): $%d", (int)STEEM_tuple->value->uint16);
+  if(Coin1_Price_tuple && Coin2_Price_tuple && Coin3_Price_tuple && Coin4_Price_tuple && Coin5_Price_tuple && Coin1_Label_tuple && Coin2_Label_tuple && Coin3_Label_tuple && Coin4_Label_tuple && Coin5_Label_tuple) {
+     snprintf(Coin1_Price_buffer, sizeof(Coin1_Price_buffer), "$%d", (int)Coin1_Price_tuple->value->uint16);
+     snprintf(Coin2_Price_buffer, sizeof(Coin2_Price_buffer), "$%d", (int)Coin2_Price_tuple->value->uint16);
+     snprintf(Coin3_Price_buffer, sizeof(Coin3_Price_buffer), "$%d", (int)Coin3_Price_tuple->value->uint16);
+     snprintf(Coin4_Price_buffer, sizeof(Coin4_Price_buffer), "$%d", (int)Coin4_Price_tuple->value->uint16);
+     snprintf(Coin5_Price_buffer, sizeof(Coin5_Price_buffer), "$%d", (int)Coin5_Price_tuple->value->uint16);
+     snprintf(Coin1_Label_buffer, sizeof(Coin1_Label_buffer), "1. %s", Coin1_Label_tuple->value->cstring);
+     snprintf(Coin2_Label_buffer, sizeof(Coin2_Label_buffer), "2. %s", Coin2_Label_tuple->value->cstring);
+     snprintf(Coin3_Label_buffer, sizeof(Coin3_Label_buffer), "3. %s", Coin3_Label_tuple->value->cstring);
+     snprintf(Coin4_Label_buffer, sizeof(Coin4_Label_buffer), "4. %s", Coin4_Label_tuple->value->cstring);
+     snprintf(Coin5_Label_buffer, sizeof(Coin5_Label_buffer), "5. %s", Coin5_Label_tuple->value->cstring);
   }
   // Assemble full string and display
-    snprintf(BTC_layer_buffer, sizeof(BTC_layer_buffer), "%s", BTC_buffer);
-    text_layer_set_text(s_BTC_layer, BTC_layer_buffer);
-    snprintf(ETH_layer_buffer, sizeof(ETH_layer_buffer), "%s", ETH_buffer);
-    text_layer_set_text(s_ETH_layer, ETH_layer_buffer);
-    snprintf(XMR_layer_buffer, sizeof(XMR_layer_buffer), "%s", XMR_buffer);
-    text_layer_set_text(s_XMR_layer, XMR_layer_buffer);
-    snprintf(DASH_layer_buffer, sizeof(DASH_layer_buffer), "%s", DASH_buffer);
-    text_layer_set_text(s_DASH_layer, DASH_layer_buffer);
-    snprintf(STEEM_layer_buffer, sizeof(STEEM_layer_buffer), "%s", STEEM_buffer);
-    text_layer_set_text(s_STEEM_layer, STEEM_layer_buffer);
+    snprintf(Coin1_layer_buffer, sizeof(Coin1_layer_buffer), "%s: %s", Coin1_Label_buffer,  Coin1_Price_buffer);
+    text_layer_set_text(s_Coin1_layer, Coin1_layer_buffer);
+    snprintf(Coin2_layer_buffer, sizeof(Coin2_layer_buffer), "%s: %s", Coin2_Label_buffer, Coin2_Price_buffer);
+    text_layer_set_text(s_Coin2_layer, Coin2_layer_buffer);
+    snprintf(Coin3_layer_buffer, sizeof(Coin3_layer_buffer), "%s: %s", Coin3_Label_buffer, Coin3_Price_buffer);
+    text_layer_set_text(s_Coin3_layer, Coin3_layer_buffer);
+    snprintf(Coin4_layer_buffer, sizeof(Coin4_layer_buffer), "%s: %s", Coin4_Label_buffer, Coin4_Price_buffer);
+    text_layer_set_text(s_Coin4_layer, Coin4_layer_buffer);
+    snprintf(Coin5_layer_buffer, sizeof(Coin5_layer_buffer), "%s: %s", Coin5_Label_buffer, Coin5_Price_buffer);
+    text_layer_set_text(s_Coin5_layer, Coin5_layer_buffer);
 }
   
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {

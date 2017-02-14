@@ -10,7 +10,7 @@ var xhrRequest = function (url, type, callback) {
 
 function getCrypto() {
   // Construct URL
-  var url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=USD,ETH,BTC,XMR,steem,dash';
+  var url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=USD,ETH,BTC,XMR,steem,dash,etc,lsk,zec,ltc';
 
   // Send request to CryptoCompare
   xhrRequest(url, 'GET', 
@@ -24,14 +24,67 @@ function getCrypto() {
       var XMR = json.USD / json.XMR;
       var STEEM = json.USD / json.STEEM;
       var DASH = json.USD / json.DASH;
+      var ETC = json.USD / json.ETC;
+      var LSK = json.USD / json.LSK;
+      var ZEC = json.USD / json.ZEC;
+      var LTC = json.USD / json.LTC;
+      
+      // create the array
+      var cryptoArray = [ETH,BTC,XMR,STEEM,DASH,ETC,LSK,ZEC,LTC];
+      cryptoArray = bubbleSort(cryptoArray);
+      
+      var cLen = cryptoArray.length;
+      
+      var i;
+      
+      var labelArray = [];
+      
+      for (i = 0; i < cLen; i ++){
+        switch(cryptoArray[i]){
+          case ETH:
+            labelArray.push("ETH");
+            break;
+          case BTC:
+            labelArray.push("BTC");
+            break;
+          case XMR:
+            labelArray.push("XMR");
+            break;
+          case STEEM:
+            labelArray.push("STEEM");
+            break;
+          case DASH:
+            labelArray.push("DASH");
+            break;
+          case ETC:
+            labelArray.push("ETC");
+            break;
+          case ZEC:
+            labelArray.push("ZEC");
+            break;
+          case LTC:
+            labelArray.push("LTC");
+            break;
+          case LSK:
+            labelArray.push("LSK");
+            break;
+          default:  
+            labelArray.push("ERROR");
+        }   
+      }
       
       // Assemble dictionary using our keys
       var dictionary = {
-      'BTC': BTC,
-      'ETH': ETH,
-      'XMR': XMR,
-      'STEEM': STEEM,
-      'DASH': DASH 
+      'Coin1_Price': cryptoArray[cLen - 1],
+      'Coin2_Price': cryptoArray[cLen - 2],
+      'Coin3_Price': cryptoArray[cLen - 3],
+      'Coin4_Price': cryptoArray[cLen - 4],
+      'Coin5_Price': cryptoArray[cLen - 5],
+      'Coin1_Label': labelArray[cLen - 1],
+      'Coin2_Label': labelArray[cLen - 2],
+      'Coin3_Label': labelArray[cLen - 3],
+      'Coin4_Label': labelArray[cLen - 4],
+      'Coin5_Label': labelArray[cLen - 5]
       };
 
       // Send to Pebble
@@ -47,7 +100,19 @@ function getCrypto() {
     );
 }
 
-
+function bubbleSort(arr){
+   var len = arr.length;
+   for (var i = len-1; i>=0; i--){
+     for(var j = 1; j<=i; j++){
+       if(arr[j-1]>arr[j]){
+           var temp = arr[j-1];
+           arr[j-1] = arr[j];
+           arr[j] = temp;
+        }
+     }
+   }
+   return arr;
+}
 
 Pebble.addEventListener('ready', 
   function(e) {

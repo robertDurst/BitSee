@@ -7,11 +7,16 @@
         "displayName": "BitSee",
         "enableMultiJS": false,
         "messageKeys": [
-            "BTC",
-            "ETH",
-            "XMR",
-            "DASH",
-            "STEEM"
+            "Coin1_Price",
+            "Coin2_Price",
+            "Coin3_Price",
+            "Coin4_Price",
+            "Coin5_Price",
+            "Coin1_Label",
+            "Coin2_Label",
+            "Coin3_Label",
+            "Coin4_Label",
+            "Coin5_Label"
         ],
         "projectType": "native",
         "resources": {
@@ -26,7 +31,7 @@
                 },
                 {
                     "file": "fonts/BebasNeue2.otf",
-                    "name": "NUEUE_18",
+                    "name": "NUEUE_20",
                     "targetPlatforms": null,
                     "type": "font"
                 },
@@ -47,5 +52,5 @@
             "watchface": false
         }
     },
-    "version": "1.0.0"
+    "version": "1.1.0"
 }
