@@ -73,13 +73,15 @@ function getCrypto() {
         }   
       }
       
+      console.log(cryptoArray[cLen - 3].toString());
+      
       // Assemble dictionary using our keys
       var dictionary = {
-      'Coin1_Price': cryptoArray[cLen - 1],
-      'Coin2_Price': cryptoArray[cLen - 2],
-      'Coin3_Price': cryptoArray[cLen - 3],
-      'Coin4_Price': cryptoArray[cLen - 4],
-      'Coin5_Price': cryptoArray[cLen - 5],
+      'Coin1_Price': cryptoArray[cLen - 1].toFixed(2).toString(),
+      'Coin2_Price': cryptoArray[cLen - 2].toFixed(2).toString(),
+      'Coin3_Price': cryptoArray[cLen - 3].toFixed(2).toString(),
+      'Coin4_Price': cryptoArray[cLen - 4].toFixed(2).toString(),
+      'Coin5_Price': cryptoArray[cLen - 5].toFixed(2).toString(),
       'Coin1_Label': labelArray[cLen - 1],
       'Coin2_Label': labelArray[cLen - 2],
       'Coin3_Label': labelArray[cLen - 3],

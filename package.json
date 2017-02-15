@@ -22,6 +22,12 @@
         "resources": {
             "media": [
                 {
+                    "file": "fonts/BebasNeue3.otf",
+                    "name": "NUEUE_12",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
                     "file": "images/bitcoin.png",
                     "name": "IMAGE_MONEY",
                     "targetPlatforms": [
@@ -52,5 +58,5 @@
             "watchface": false
         }
     },
-    "version": "1.1.0"
+    "version": "1.2.0"
 }

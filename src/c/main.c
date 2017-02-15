@@ -6,6 +6,9 @@ static Window *s_main_window;
 static TextLayer *s_title_layer;
 static GFont s_title_font;
 
+static TextLayer *s_footer_layer;
+static GFont s_footer_font;
+
 static TextLayer *s_Coin1_layer;
 static TextLayer *s_Coin2_layer;
 static TextLayer *s_Coin3_layer;
@@ -13,6 +16,35 @@ static TextLayer *s_Coin4_layer;
 static TextLayer *s_Coin5_layer;
 
 static GFont s_crypto_font;
+
+
+void ftoa(char* str, double val, int precision) {
+  // start with positive/negative
+  if (val < 0) {
+    *(str++) = '-';
+    val = -val;
+  }
+  // integer value
+  snprintf(str, 12, "%d", (int) val);
+  str += strlen(str);
+  val -= (int) val;
+  // decimals
+  if ((precision > 0) && (val >= .00001)) {
+  // add period
+  *(str++) = '.';
+  // loop through precision
+  for (int i = 0; i < precision; i++)
+  if (val > 0) {
+  val *= 10;
+  *(str++) = '0' + (int) (val + ((i == precision - 1) ? .5 : 0));
+  val -= (int) val;
+  } else
+  break;
+  }
+  // terminate
+  *str = '\0';
+}
+
 
 static void main_window_load(Window *window) {
     // Get information about the Window
@@ -39,8 +71,29 @@ static void main_window_load(Window *window) {
   // Apply to TextLayer
   text_layer_set_font(s_title_layer, s_title_font);
   
+  // Create the TextLayer with specific bounds
+  s_footer_layer = text_layer_create(
+      GRect(0, 155, bounds.size.w, 50));
+
+  // Improve the layout to be more like a watchface
+  text_layer_set_background_color(s_footer_layer, GColorClear);
+  text_layer_set_text_color(s_footer_layer, GColorWhite);
+  text_layer_set_font(s_footer_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
+  text_layer_set_text_alignment(s_footer_layer, GTextAlignmentCenter);
+  text_layer_set_text(s_footer_layer, "powered by CryptoCompare API");
+
+  // Add it as a child layer to the Window's root layer
+  layer_add_child(window_layer, text_layer_get_layer(s_footer_layer));
+  
+  // Create GFont
+  s_footer_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_NUEUE_12));
+
+  // Apply to TextLayer
+  text_layer_set_font(s_footer_layer, s_footer_font);
+ 
+  
   // Create Coin 1 Layer
-  s_Coin1_layer = text_layer_create( GRect(5, 50, bounds.size.w, 25));
+  s_Coin1_layer = text_layer_create( GRect(5, 45, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_Coin1_layer, GColorClear);
@@ -54,7 +107,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin1_layer));
   
    // Create Coin 2 Layer
-  s_Coin2_layer = text_layer_create( GRect(5, 70, bounds.size.w, 25));
+  s_Coin2_layer = text_layer_create( GRect(5, 65, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_Coin2_layer, GColorClear);
@@ -67,7 +120,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin2_layer));
   
   // Create Coin 3 Layer
-  s_Coin3_layer = text_layer_create( GRect(5, 90, bounds.size.w, 25));
+  s_Coin3_layer = text_layer_create( GRect(5, 85, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_Coin3_layer, GColorClear);
@@ -81,7 +134,7 @@ static void main_window_load(Window *window) {
   
   
   // Create Coin 4 Layer
-  s_Coin4_layer = text_layer_create( GRect(5, 110, bounds.size.w, 25));
+  s_Coin4_layer = text_layer_create( GRect(5, 105, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_Coin4_layer, GColorClear);
@@ -94,7 +147,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_Coin4_layer));
   
    // Create Coin 5 Layer
-  s_Coin5_layer = text_layer_create( GRect(5, 130, bounds.size.w, 25));
+  s_Coin5_layer = text_layer_create( GRect(5, 125, bounds.size.w, 25));
 
   // Style the text
   text_layer_set_background_color(s_Coin5_layer, GColorClear);
@@ -112,6 +165,7 @@ static void main_window_unload(Window *window) {
   
   // Destroy TextLayer
   text_layer_destroy(s_title_layer);
+  text_layer_destroy(s_footer_layer);
   
    // Unload GFont
   fonts_unload_custom_font(s_title_font);
@@ -177,11 +231,12 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   
   // If all data is available, use it
   if(Coin1_Price_tuple && Coin2_Price_tuple && Coin3_Price_tuple && Coin4_Price_tuple && Coin5_Price_tuple && Coin1_Label_tuple && Coin2_Label_tuple && Coin3_Label_tuple && Coin4_Label_tuple && Coin5_Label_tuple) {
-     snprintf(Coin1_Price_buffer, sizeof(Coin1_Price_buffer), "$%d", (int)Coin1_Price_tuple->value->uint16);
-     snprintf(Coin2_Price_buffer, sizeof(Coin2_Price_buffer), "$%d", (int)Coin2_Price_tuple->value->uint16);
-     snprintf(Coin3_Price_buffer, sizeof(Coin3_Price_buffer), "$%d", (int)Coin3_Price_tuple->value->uint16);
-     snprintf(Coin4_Price_buffer, sizeof(Coin4_Price_buffer), "$%d", (int)Coin4_Price_tuple->value->uint16);
-     snprintf(Coin5_Price_buffer, sizeof(Coin5_Price_buffer), "$%d", (int)Coin5_Price_tuple->value->uint16);
+     snprintf(Coin1_Price_buffer, sizeof(Coin1_Price_buffer), "$%s", Coin1_Price_tuple->value->cstring);
+     snprintf(Coin2_Price_buffer, sizeof(Coin2_Price_buffer), "$%s", Coin2_Price_tuple->value->cstring);
+     snprintf(Coin3_Price_buffer, sizeof(Coin3_Price_buffer), "$%s", Coin3_Price_tuple->value->cstring);
+     snprintf(Coin4_Price_buffer, sizeof(Coin4_Price_buffer), "$%s", Coin4_Price_tuple->value->cstring);
+     snprintf(Coin5_Price_buffer, sizeof(Coin5_Price_buffer), "$%s", Coin5_Price_tuple->value->cstring);
+     
      snprintf(Coin1_Label_buffer, sizeof(Coin1_Label_buffer), "1. %s", Coin1_Label_tuple->value->cstring);
      snprintf(Coin2_Label_buffer, sizeof(Coin2_Label_buffer), "2. %s", Coin2_Label_tuple->value->cstring);
      snprintf(Coin3_Label_buffer, sizeof(Coin3_Label_buffer), "3. %s", Coin3_Label_tuple->value->cstring);
