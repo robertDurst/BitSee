@@ -51,12 +51,15 @@
         },
         "sdkVersion": "3",
         "targetPlatforms": [
-            "aplite"
+            "aplite",
+            "basalt",
+            "diorite",
+            "emery"
         ],
         "uuid": "1ef9c3ac-c65c-4862-9644-7313c0091748",
         "watchapp": {
             "watchface": false
         }
     },
-    "version": "1.2.0"
+    "version": "1.4.0"
 }
