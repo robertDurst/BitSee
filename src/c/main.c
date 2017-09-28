@@ -46,6 +46,8 @@ void ftoa(char* str, double val, int precision) {
 }
 
 
+
+
 static void main_window_load(Window *window) {
     // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
@@ -180,6 +182,18 @@ static void main_window_unload(Window *window) {
 }
 
 
+
+void down_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+   text_layer_set_text(s_Coin5_layer, "Loading...");
+}
+
+static void click_config_provider(void *context) {
+  ButtonId id = BUTTON_ID_DOWN;  // The Select button
+
+  window_single_click_subscribe(id, down_single_click_handler);
+
+}
+
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   
   // Get cryptocurrency update every 1 minute
@@ -274,6 +288,9 @@ static void init() {
   // Create main Window element and assign to pointer
   s_main_window = window_create();
   
+  // Use this provider to add button click subscriptions
+  window_set_click_config_provider(s_main_window, click_config_provider);
+  
    // Set background
   window_set_background_color(s_main_window, GColorBlack);
 
@@ -298,7 +315,12 @@ static void init() {
   app_message_register_inbox_dropped(inbox_dropped_callback);
   app_message_register_outbox_failed(outbox_failed_callback);
   app_message_register_outbox_sent(outbox_sent_callback);
+   
+  
+ 
 }
+
+
 
 // Reallocating memory and deinitialization
 static void deinit() {

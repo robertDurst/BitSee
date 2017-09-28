@@ -10,7 +10,7 @@ var xhrRequest = function (url, type, callback) {
 
 function getCrypto() {
   // Construct URL
-  var url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=USD,ETH,BTC,XMR,steem,dash,etc,lsk,zec,ltc';
+  var url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=USD,ETH,BTC,XMR,STEEM,DASH,ETC,LSK,ZEC,LTC,FTC';
 
   // Send request to CryptoCompare
   xhrRequest(url, 'GET', 
@@ -28,6 +28,7 @@ function getCrypto() {
       var LSK = json.USD / json.LSK;
       var ZEC = json.USD / json.ZEC;
       var LTC = json.USD / json.LTC;
+      var FTC = json.USD / json.FTC;
       
       // create the array
       var cryptoArray = [ETH,BTC,XMR,STEEM,DASH,ETC,LSK,ZEC,LTC];
@@ -67,6 +68,9 @@ function getCrypto() {
             break;
           case LSK:
             labelArray.push("LSK");
+            break;
+          case LSK:
+            labelArray.push("FTC");
             break;
           default:  
             labelArray.push("ERROR");
